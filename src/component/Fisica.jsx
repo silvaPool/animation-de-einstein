@@ -1,52 +1,24 @@
 import { useSpring, animated, useTransition } from "@react-spring/web";
 import { useState } from "react";
 
-export default function Fisica() {
-//   const [isVisible, setIsVisible] = useState(false);
+const name = "Bufalo";
+const name1 = "Maiden";
+const name2 = "Kurt";
 
-//   const opacityConfig = {
-//     tension: 300,
-//     friction: 40,
-//   };
+export default function Fisica({data = [name, name1, name2]}) {
 
-//   const opacityAnimation = useSpring({
-//     opacity: isVisible ? 1 : 0,
-//     config: opacityConfig,
-//   });
-
-//   const toggleVisibility = () => setIsVisible(!isVisible);
-
-    const [items, setItems] = useState([]);
-
-    const addItem = () => {
-        const newItem = `Item ${items.length + 1}`;
-        setItems([...items, newItem]);
-    }
-
-    const removeItem = () => {
-        if (items.length === 0) return;
-        const newItems = items.slice(0, -1);
-        setItems(newItems);
-    };
-
-    const transitions = useTransition(items, {
-        from: {opacity: 0, transform: "translate3d(0, -40px, 0)" },
-        enter: {opacity: 1, transform: "translate3d(0, 0, 0)"},
-        leave: {opacity: 0, transform: "translate3d(0, -40px, 0)"},
+    const transitions = useTransition(data, {
+        from: {scale: 0},
+        enter: {scale: 1},
+        leave: {scale: 0.5},
+        config: {duration: 2500},
     });
 
-  return (
-    <div className="transitionDiv">
-        <div>
-            <button onClick={addItem}>Add Item</button>
-            <button onClick={removeItem}>Remove Item</button>
-        </div>
-
-        <div className="transitionItem">
-            {transitions((style, item) => {
-                <animated.div style={style} className='list'>{item}</animated.div>
-            })}
-        </div>
+  return transitions((style, item) => {
+    <div className="nameBody">
+        <animated.div style={style} className="nameDiv">
+            {item}
+        </animated.div>
     </div>
-  );
+  })
 }
